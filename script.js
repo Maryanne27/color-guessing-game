@@ -7,7 +7,7 @@ let correctColour;
 let currentRound = 0;
 const totalRounds = 10;
 
-/* Generate random  colors.*/
+/* Generate random colors */
 function getRandomColor() {
     const hexChars = "0123456789ABCDEF";
     let color = "#";
@@ -19,16 +19,16 @@ function getRandomColor() {
     return color;
 }
 
-/* ends the game if all rounds are complete.*/
+/* Ends the game if all rounds are complete */
 const gameStatus = document.getElementById("gameStatus");
 const rounds = document.getElementById("rounds");
+
 function startNewRound() {
     if (currentRound === totalRounds) {  
         showGameOver();
         return;
     }
 
-    currentRound++;
     rounds.textContent = `Round: ${currentRound}/${totalRounds}`;
 
     let colorsArray = [];
@@ -68,6 +68,9 @@ function handleColorSelection(selectedColor, button) {
         setTimeout(() => button.classList.remove("shake-and-fade"), 800);
     }
 
+    currentRound++; // Round updates whether correct or incorrect
+    rounds.textContent = `Round: ${currentRound}/${totalRounds}`;
+
     setTimeout(() => {
         gameStatus.textContent = "";
     }, 1500);
@@ -75,7 +78,7 @@ function handleColorSelection(selectedColor, button) {
     setTimeout(startNewRound, 1000);
 }
 
-/* Displays the Game Over modal. */
+/* Displays the Game Over modal */
 const gameOverModal = document.getElementById("gameOverModal");
 const finalscores = document.getElementById("finalScore");
 const gameContainer = document.querySelector(".container");
@@ -85,6 +88,7 @@ function showGameOver() {
     gameContainer.style.display = "none"; // Hide the game 
     finalscores.textContent = `Final Score: ${score}`;
 }
+
 function resetGame() {
     score = 0;
     currentRound = 0;
@@ -92,7 +96,7 @@ function resetGame() {
     rounds.textContent = `Round: ${currentRound}/${totalRounds}`;
 
     gameContainer.style.display = "block"; // Show game 
-    gameOverModal.style.display = "none"; // Hides modal
+    gameOverModal.style.display = "none"; // Hide modal
 
     startNewRound();
 }
@@ -103,4 +107,5 @@ const newGameButton = document.getElementById("newGameButton");
 restartGameButton.addEventListener("click", resetGame);
 newGameButton.addEventListener("click", resetGame);
 
+rounds.textContent = `Round: ${currentRound}/${totalRounds}`; // Ensure 0/10 is displayed initially
 startNewRound();
